@@ -1,2 +1,4 @@
 env/
+stockcs/stockapp/migrations
+stockcs/stockapp/migrations/**
 stockcs/stockcs/settings.py
