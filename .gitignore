@@ -1,4 +1,7 @@
 env/
 stockcs/stockapp/migrations
+stockcs/stockapp/migrations/*
 stockcs/stockapp/migrations/**
+stockcs/stockcs/__pycache__/**
+stockcs/stockcs/__pycache__/*
 stockcs/stockcs/settings.py
