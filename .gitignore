@@ -5,3 +5,5 @@ stockcs/stockapp/migrations/**
 stockcs/stockcs/__pycache__/**
 stockcs/stockcs/__pycache__/*
 stockcs/stockcs/settings.py
+**/__pycache__/**
+*.pyc
