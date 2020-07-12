@@ -1,6 +1,22 @@
 from django.shortcuts import render, redirect
+from stockapp.models import Name
+from stockapp.forms import NameForm
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html', {})
+    names_from_db = Name.objects.all()
 
+    form = NameForm()
+
+    context_dict = {'names_from_context': names_from_db, 'form': form}
+
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return render(request, 'index.html', context_dict)
+        else:
+            print(form.errors)
+
+    return render(request, 'index.html', context_dict)
