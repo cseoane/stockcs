@@ -18,8 +18,9 @@ class ProductoForm(forms.ModelForm):
 
 
 class VarianteForm(forms.ModelForm):
-    nombre = forms.CharField(max_length=100, help_text = "Nombre")
+    productos_from_db = Producto.objects.all()
+    producto = forms.ModelChoiceField(queryset=productos_from_db)
 
     class Meta:
         model = Variante
-        fields = ('nombre',)
+        fields = ('producto',)

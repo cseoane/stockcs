@@ -27,7 +27,7 @@ def productos(request):
 
     form = ProductoForm()
 
-    context_dict = {'names_from_context': productos_from_db, 'form': form}
+    context_dict = {'productos_from_context': productos_from_db, 'form': form}
 
     if request.method == 'POST':
         form = ProductoForm(request.POST)
@@ -46,7 +46,7 @@ def variantes(request):
 
     form = VarianteForm()
 
-    context_dict = {'names_from_context': variantes_from_db, 'form': form}
+    context_dict = {'variantes_from_context': variantes_from_db, 'form': form}
 
     if request.method == 'POST':
         form = VarianteForm(request.POST)

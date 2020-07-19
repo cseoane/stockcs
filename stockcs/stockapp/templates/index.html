@@ -16,7 +16,7 @@
         <h3>Please go to the admin and add a Name under 'MYAPP'</h3>
     {% endif %}
     <h3>Add a Name</h3>
-    <form id="name_form" method="post" action="/">
+    <form id="name_form" method="post" action="/app/">
         {% csrf_token %}
         {% for field in form.visible_fields %}
             {{ field.errors }}
