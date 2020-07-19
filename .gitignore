@@ -7,3 +7,4 @@ stockcs/stockcs/__pycache__/*
 stockcs/stockcs/settings.py
 **/__pycache__/**
 *.pyc
+*.swp
