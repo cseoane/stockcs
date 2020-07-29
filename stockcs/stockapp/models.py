@@ -10,26 +10,47 @@ class Name(models.Model):
         return self.name_value
 
 
-class Producto(models.Model):
-
+class ProductoTipo(models.Model):
     nombre = models.CharField(max_length=100)
     
     def __str__(self): 
         return self.nombre
 
-class Etiqueta(models.Model):
 
+class ProductoSubTipo(models.Model):
+    tipo = models.ForeignKey(ProductoTipo, on_delete=models.CASCADE) 
     nombre = models.CharField(max_length=100)
+    
+    def __str__(self): 
+        return self.nombre
 
-    valor = models.CharField(max_length=100)
+
+class Producto(models.Model):
+    tipo = models.ForeignKey(ProductoSubTipo, on_delete=models.CASCADE) 
+    nombre = models.CharField(max_length=100)
+    
+    def __str__(self): 
+        return self.nombre
+
+
+class EtiquetaTipo(models.Model):
+    nombre = models.CharField(max_length=100)
 
     def __str__(self): 
         return self.nombre
 
+
+class Etiqueta(models.Model):
+
+    tipo = models.ForeignKey(EtiquetaTipo, on_delete=models.CASCADE) 
+    valor = models.CharField(max_length=100)
+
+    def __str__(self): 
+        return tipo.nombre + ":" + self.valor
+
 class Variante(models.Model):
 
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE) 
-
     etiquetas = models.ManyToManyField(Etiqueta)
 
     def __str__(self): 
