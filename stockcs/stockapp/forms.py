@@ -12,8 +12,6 @@ class NameForm(forms.ModelForm):
 
 
 class EtiquetaTipoForm(forms.ModelForm):
-    productos_from_db = Producto.objects.all()
-    producto = forms.ModelChoiceField(queryset=productos_from_db)
 
     class Meta:
         model = EtiquetaTipo
@@ -33,17 +31,17 @@ class ProductoTipoForm(forms.ModelForm):
     nombre = forms.CharField(max_length=100)
 
     class Meta:
-        model = Producto
+        model = ProductoTipo
         fields = ('nombre',)
 
 
-class ProductoSubtipoForm(forms.ModelForm):
+class ProductoSubTipoForm(forms.ModelForm):
     productoTipos_from_db = ProductoTipo.objects.all()
     tipo = forms.ModelChoiceField(queryset=productoTipos_from_db)
     nombre = forms.CharField(max_length=100)
 
     class Meta:
-        model = Producto
+        model = ProductoSubTipo
         fields = ('nombre','tipo')
 
 

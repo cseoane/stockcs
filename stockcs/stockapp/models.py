@@ -10,29 +10,6 @@ class Name(models.Model):
         return self.name_value
 
 
-class ProductoTipo(models.Model):
-    nombre = models.CharField(max_length=100)
-    
-    def __str__(self): 
-        return self.nombre
-
-
-class ProductoSubTipo(models.Model):
-    tipo = models.ForeignKey(ProductoTipo, on_delete=models.CASCADE) 
-    nombre = models.CharField(max_length=100)
-    
-    def __str__(self): 
-        return self.nombre
-
-
-class Producto(models.Model):
-    tipo = models.ForeignKey(ProductoSubTipo, on_delete=models.CASCADE) 
-    nombre = models.CharField(max_length=100)
-    
-    def __str__(self): 
-        return self.nombre
-
-
 class EtiquetaTipo(models.Model):
     nombre = models.CharField(max_length=100)
 
@@ -42,11 +19,34 @@ class EtiquetaTipo(models.Model):
 
 class Etiqueta(models.Model):
 
-    tipo = models.ForeignKey(EtiquetaTipo, on_delete=models.CASCADE) 
+    tipo_padre = models.ForeignKey(EtiquetaTipo, on_delete=models.CASCADE) 
     valor = models.CharField(max_length=100)
 
     def __str__(self): 
-        return tipo.nombre + ":" + self.valor
+        return tipo_padre.nombre + ":" + self.valor
+
+
+class ProductoTipo(models.Model):
+    nombre = models.CharField(max_length=100)
+    
+    def __str__(self): 
+        return self.nombre
+
+
+class ProductoSubTipo(models.Model):
+    tipo_padre = models.ForeignKey(ProductoTipo, on_delete=models.CASCADE) 
+    nombre = models.CharField(max_length=100)
+    
+    def __str__(self): 
+        return self.nombre
+
+
+class Producto(models.Model):
+    tipo_padre = models.ForeignKey(ProductoSubTipo, on_delete=models.CASCADE) 
+    nombre = models.CharField(max_length=100)
+    
+    def __str__(self): 
+        return self.nombre
 
 class Variante(models.Model):
 
