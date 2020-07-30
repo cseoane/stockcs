@@ -23,7 +23,7 @@ class Etiqueta(models.Model):
     valor = models.CharField(max_length=100)
 
     def __str__(self): 
-        return tipo_padre.nombre + ":" + self.valor
+        return self.tipo_padre.nombre + ":" + self.valor
 
 
 class ProductoTipo(models.Model):
@@ -42,7 +42,7 @@ class ProductoSubTipo(models.Model):
 
 
 class Producto(models.Model):
-    tipo_padre = models.ForeignKey(ProductoSubTipo, on_delete=models.CASCADE) 
+    productoSubTipo = models.ForeignKey(ProductoSubTipo, on_delete=models.CASCADE) 
     nombre = models.CharField(max_length=100)
     
     def __str__(self): 
@@ -53,6 +53,13 @@ class Variante(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE) 
     etiquetas = models.ManyToManyField(Etiqueta)
 
+    def joinEtiquetas(self):
+        etiquetasConcatenadas = ":"
+        for etiqueta in self.etiquetas.all():
+            etiquetasConcatenadas = etiquetasConcatenadas + ", " + etiqueta.valor
+        etiquetasConcatenadas = etiquetasConcatenadas.replace(":,",":")
+        return etiquetasConcatenadas
+
     def __str__(self): 
-        return producto.nombre
+        return self.producto.nombre + self.joinEtiquetas()
 

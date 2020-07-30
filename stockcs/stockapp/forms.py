@@ -20,11 +20,11 @@ class EtiquetaTipoForm(forms.ModelForm):
 
 class EtiquetaForm(forms.ModelForm):
     etiquetaTipos_from_db = EtiquetaTipo.objects.all()
-    tipo = forms.ModelChoiceField(queryset=etiquetaTipos_from_db)
+    tipo_padre = forms.ModelChoiceField(queryset=etiquetaTipos_from_db)
 
     class Meta:
         model = Etiqueta
-        fields = ('tipo','valor')
+        fields = ('tipo_padre','valor')
 
 
 class ProductoTipoForm(forms.ModelForm):
@@ -37,22 +37,22 @@ class ProductoTipoForm(forms.ModelForm):
 
 class ProductoSubTipoForm(forms.ModelForm):
     productoTipos_from_db = ProductoTipo.objects.all()
-    tipo = forms.ModelChoiceField(queryset=productoTipos_from_db)
+    tipo_padre = forms.ModelChoiceField(queryset=productoTipos_from_db)
     nombre = forms.CharField(max_length=100)
 
     class Meta:
         model = ProductoSubTipo
-        fields = ('nombre','tipo')
+        fields = ('nombre','tipo_padre')
 
 
 class ProductoForm(forms.ModelForm):
     productoSubTipos_from_db = ProductoSubTipo.objects.all()
-    subtipo = forms.ModelChoiceField(queryset=productoSubTipos_from_db)
+    productoSubTipo = forms.ModelChoiceField(queryset=productoSubTipos_from_db)
     nombre = forms.CharField(max_length=100)
 
     class Meta:
         model = Producto
-        fields = ('nombre','subtipo')
+        fields = ('nombre','productoSubTipo')
 
 
 class VarianteForm(forms.ModelForm):

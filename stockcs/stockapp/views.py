@@ -33,7 +33,7 @@ def productoSubTipos(request):
 
     productoSubTipo_form = ProductoSubTipoForm()
 
-    context_dict = {'productoSubTipos_from_context': productoSubTipos_from_db, 'productoSubTipoorm': productoSubTipo_form}
+    context_dict = {'productoSubTipos_from_context': productoSubTipos_from_db, 'productoSubTipo_form': productoSubTipo_form}
 
     if request.method == 'POST':
         form = ProductoSubTipoForm(request.POST)
