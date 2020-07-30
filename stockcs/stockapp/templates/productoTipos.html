@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+
+    <h2>Tipos de Productos</h2>
+    <p>This shows a list of names and lets you Create, Update and Delete them.</p>
+
+    <h3>Nuevo Tipo de Producto</h3>
+    <form id="name_form" method="post" action="">
+        {% csrf_token %}
+        {{ productoTipo_form.as_p }}
+        <input type="submit" name="submit" value="Create">
+    </form>
+
+    <h3>Listado de tipos de productos</h3>
+
+    {% if productoTipos_from_context %}
+        <ul>
+            {% for productoTipo in productoTipos_from_context %}
+                <li>{{ productoTipo }}  <button>Delete</button> <button>Update</button></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>No existen productoTipos</h3>
+    {% endif %}
+
+{% endblock %}
