@@ -1,20 +1,58 @@
 from django import forms
-from stockapp.models import Name, Producto, Variante
+from django.db import models
+from stockapp.models import (Name, Producto, ProductoSubTipo, ProductoTipo, 
+Variante, Etiqueta, EtiquetaTipo, ProductoUnidad, ProductoStock)
 
 class NameForm(forms.ModelForm):
-    name_value = forms.CharField(max_length=100, help_text = "Enter a name")
+    name_value = forms.CharField(max_length=100)
 
     class Meta:
         model = Name
         fields = ('name_value',)
 
 
+class EtiquetaTipoForm(forms.ModelForm):
+
+    class Meta:
+        model = EtiquetaTipo
+        fields = ('nombre',)
+
+
+class EtiquetaForm(forms.ModelForm):
+    etiquetaTipos_from_db = EtiquetaTipo.objects.all()
+    tipo_padre = forms.ModelChoiceField(queryset=etiquetaTipos_from_db)
+
+    class Meta:
+        model = Etiqueta
+        fields = ('tipo_padre','valor')
+
+
+class ProductoTipoForm(forms.ModelForm):
+    nombre = forms.CharField(max_length=100)
+
+    class Meta:
+        model = ProductoTipo
+        fields = ('nombre',)
+
+
+class ProductoSubTipoForm(forms.ModelForm):
+    productoTipos_from_db = ProductoTipo.objects.all()
+    tipo_padre = forms.ModelChoiceField(queryset=productoTipos_from_db)
+    nombre = forms.CharField(max_length=100)
+
+    class Meta:
+        model = ProductoSubTipo
+        fields = ('nombre','tipo_padre')
+
+
 class ProductoForm(forms.ModelForm):
-    nombre = forms.CharField(max_length=100, help_text = "Nombre")
+    productoSubTipos_from_db = ProductoSubTipo.objects.all()
+    productoSubTipo = forms.ModelChoiceField(queryset=productoSubTipos_from_db)
+    nombre = forms.CharField(max_length=100)
 
     class Meta:
         model = Producto
-        fields = ('nombre',)
+        fields = ('nombre','productoSubTipo')
 
 
 class VarianteForm(forms.ModelForm):
@@ -23,4 +61,12 @@ class VarianteForm(forms.ModelForm):
 
     class Meta:
         model = Variante
-        fields = ('producto',)
+        fields = ('producto','etiquetas','unidad')
+
+
+class ProductoStockForm(forms.ModelForm):
+    productoStock_from_db = ProductoStock.objects.all()
+
+    class Meta:
+        model = ProductoStock
+        fields = ('variante','cantidad')

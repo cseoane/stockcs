@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+
+    <h2>Etiqueta Tipos</h2>
+    <p>This shows a list of names and lets you Create, Update and Delete them.</p>
+
+
+    <h3>Nueva Etiqueta Tipo</h3>
+    <form id="etiquetaTipo_form" method="post" action="/app/etiquetaTipos/">
+        {% csrf_token %}
+        {{ etiquetaTipo_form.as_p }}
+        <input type="submit" name="submit" value="Create">
+    </form>
+
+    <h3>Listado de EtiquetaTipos</h3>
+
+    {% if etiquetaTipos_from_context %}
+        <ul>
+            {% for etiquetaTipo in etiquetaTipos_from_context %}
+                <li>{{ etiquetaTipo.nombre }}  <button>Delete</button> <button>Update</button></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>No existen etiquetaTipos</h3>
+    {% endif %}
+
+{% endblock %}
