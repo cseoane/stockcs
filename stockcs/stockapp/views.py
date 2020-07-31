@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from stockapp.models import (Name, Producto, Variante, Etiqueta, EtiquetaTipo, 
-    ProductoTipo, ProductoSubTipo)
+    ProductoTipo, ProductoSubTipo, ProductoStock)
 from stockapp.forms import (NameForm, VarianteForm, ProductoForm, EtiquetaForm,
-    EtiquetaTipoForm, ProductoTipoForm, ProductoSubTipoForm)
+    EtiquetaTipoForm, ProductoTipoForm, ProductoSubTipoForm, ProductoStockForm)
 
 # Create your views here.
 def index(request):
@@ -129,3 +129,27 @@ def etiquetaTipos(request):
             print(form.errors)
 
     return render(request, 'etiquetaTipos.html', context_dict)
+
+
+def productoStock(request):
+    productoStock_from_db = productoStock.objects.all()
+    print(productoStock_from_db)
+
+    productoStock_form = ProductoStockForm()
+
+    context_dict = {
+        'productoStock_from_context': productoStock_from_db, 
+        'productoStock_form': productoStock_form
+    }
+
+    if request.method == 'POST':
+        form = ProductoStockForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return render(request, 'productoStock.html', context_dict)
+        else:
+            print(form.errors)
+
+    return render(request, 'productoStock.html', context_dict)
+

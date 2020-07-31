@@ -48,10 +48,18 @@ class Producto(models.Model):
     def __str__(self): 
         return self.nombre
 
+class ProductoUnidad(models.Model):
+
+    nombre = models.CharField(max_length=100)
+    def __str__(self): 
+        return self.nombre
+
+
 class Variante(models.Model):
 
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE) 
     etiquetas = models.ManyToManyField(Etiqueta)
+    unidad = models.ForeignKey(ProductoUnidad, on_delete=models.CASCADE, default=1) 
 
     def joinEtiquetas(self):
         etiquetasConcatenadas = ":"
@@ -62,4 +70,20 @@ class Variante(models.Model):
 
     def __str__(self): 
         return self.producto.nombre + self.joinEtiquetas()
+
+
+class ProductoStock(models.Model):
+
+    fecha = models.DateField(auto_now=False, auto_now_add=True)
+    variante = models.ForeignKey(Variante, on_delete=models.CASCADE) 
+    cantidad = models.DecimalField(max_digits=12, decimal_places=3)
+
+    def __str__(self): 
+        return self.cantidad + " " + self.unidad.nombre
+
+    def representacion(self):
+        return (self.fecha + "|" + 
+        self.variante + " - " + 
+        self.cantidad + " " + 
+        self.variante.unidad.nombre)
 

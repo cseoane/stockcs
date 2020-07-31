@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'productoTipos', views.productoTipos, name='index'),
     url(r'etiquetas', views.etiquetas, name='index'),
     url(r'etiquetaTipos', views.etiquetaTipos, name='index'),
+    url(r'productoStock', views.productoStock, name='index'),
     ]
