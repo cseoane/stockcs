@@ -72,6 +72,14 @@ class Variante(models.Model):
         return self.producto.nombre + self.joinEtiquetas()
 
 
+class Deposito(models.Model):
+    nombre = models.CharField(max_length=100)
+    ubicacion = models.CharField(max_length=150)
+    
+    def __str__(self): 
+        return self.nombre
+
+
 class ProductoStock(models.Model):
 
     fecha = models.DateField(auto_now=False, auto_now_add=True)
@@ -79,11 +87,11 @@ class ProductoStock(models.Model):
     cantidad = models.DecimalField(max_digits=12, decimal_places=3)
 
     def __str__(self): 
-        return self.cantidad + " " + self.unidad.nombre
+        return self.variante.__str__() + " : " + str(self.cantidad) + " " + self.variante.unidad.nombre
 
     def representacion(self):
         return (self.fecha + "|" + 
         self.variante + " - " + 
-        self.cantidad + " " + 
+        self.cantidad.__str__ + " " + 
         self.variante.unidad.nombre)
 

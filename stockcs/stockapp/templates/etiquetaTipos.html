@@ -7,7 +7,7 @@
 
 
     <h3>Nueva Etiqueta Tipo</h3>
-    <form id="etiquetaTipo_form" method="post" action="/app/etiquetaTipos/">
+    <form id="etiquetaTipo_form" method="post" action="">
         {% csrf_token %}
         {{ etiquetaTipo_form.as_p }}
         <input type="submit" name="submit" value="Create">

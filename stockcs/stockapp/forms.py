@@ -1,7 +1,7 @@
 from django import forms
 from django.db import models
 from stockapp.models import (Name, Producto, ProductoSubTipo, ProductoTipo, 
-Variante, Etiqueta, EtiquetaTipo, ProductoUnidad, ProductoStock)
+Variante, Etiqueta, EtiquetaTipo, ProductoUnidad, ProductoStock, Deposito)
 
 class NameForm(forms.ModelForm):
     name_value = forms.CharField(max_length=100)
@@ -64,8 +64,14 @@ class VarianteForm(forms.ModelForm):
         fields = ('producto','etiquetas','unidad')
 
 
+class DepositoForm(forms.ModelForm):
+
+    class Meta:
+        model = Deposito
+        fields = ('nombre','ubicacion')
+
+
 class ProductoStockForm(forms.ModelForm):
-    productoStock_from_db = ProductoStock.objects.all()
 
     class Meta:
         model = ProductoStock

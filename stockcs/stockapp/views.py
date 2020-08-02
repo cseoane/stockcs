@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from stockapp.models import (Name, Producto, Variante, Etiqueta, EtiquetaTipo, 
-    ProductoTipo, ProductoSubTipo, ProductoStock)
+    ProductoTipo, ProductoSubTipo, ProductoStock, Deposito)
 from stockapp.forms import (NameForm, VarianteForm, ProductoForm, EtiquetaForm,
-    EtiquetaTipoForm, ProductoTipoForm, ProductoSubTipoForm, ProductoStockForm)
+    EtiquetaTipoForm, ProductoTipoForm, ProductoSubTipoForm, ProductoStockForm,
+    DepositoForm)
 
 # Create your views here.
 def index(request):
@@ -131,15 +132,44 @@ def etiquetaTipos(request):
     return render(request, 'etiquetaTipos.html', context_dict)
 
 
+def depositos(request):
+    depositos_from_db = Deposito.objects.all()
+    print(depositos_from_db)
+
+    deposito_form = DepositoForm()
+
+    context_dict = {
+        'depositos_from_context': depositos_from_db, 
+        'deposito_form': deposito_form
+    }
+
+    if request.method == 'POST':
+        form = DepositoForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return render(request, 'depositos.html', context_dict)
+        else:
+            print(form.errors)
+
+    return render(request, 'depositos.html', context_dict)
+
+
+
 def productoStock(request):
-    productoStock_from_db = productoStock.objects.all()
+    productoStock_from_db = ProductoStock.objects.all()
     print(productoStock_from_db)
 
+    formset = []
     productoStock_form = ProductoStockForm()
+
+    for productoStock in productoStock_from_db:
+        formset.append(ProductoStockForm(productoStock))
 
     context_dict = {
         'productoStock_from_context': productoStock_from_db, 
-        'productoStock_form': productoStock_form
+        'productoStock_form': productoStock_form,
+        'formset': formset
     }
 
     if request.method == 'POST':
