@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+
+    <h2>Depositos</h2>
+    <p>This shows a list of names and lets you Create, Update and Delete them.</p>
+
+    <h3>Nuevo Deposito</h3>
+    <form id="etiqueta_form" method="post" action="">
+        {% csrf_token %}
+        {{ deposito_form.as_p }}
+        <input type="submit" name="submit" value="Create">
+    </form>
+
+    <h3>Listado de Depositos</h3>
+
+    {% if depositos_from_context %}
+        <ul>
+            {% for deposito in depositos_from_context %}
+                <li>{{ deposito }}  <button>Delete</button> <button>Update</button></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>No existen Depositos</h3>
+    {% endif %}
+
+{% endblock %}
